@@ -17,16 +17,13 @@ public class TankWarClient extends Frame {
     public static final int  GAME_WIDTH = 800;
     public static final int  GAME_LENGTH = 600;
 
-    int x = 50;     //设置坦克的位置距离左上角为：50 50
-    int y = 50;
     Image offScreenImage = null;
+
+    Tank myTank = new Tank(50,50);
 
     //画出坦克的原型
     public void paint(Graphics g) {
-        Color c = g.getColor();
-        g.setColor(Color.RED);      //设置坦克的颜色为红色
-        g.fillOval(x,y,20,20);    //   坦克的大小为半径20
-        g.setColor(c);
+       myTank.draw(g);
     }
 
     //使用双缓冲解决图像在显示的时候的不连贯的问题
@@ -96,21 +93,7 @@ public class TankWarClient extends Frame {
     private class KeyMonitor extends KeyAdapter {
         @Override
         public void keyPressed(KeyEvent e) {
-            int key = e.getKeyCode();//获取键盘的按键的值
-            switch(key) {
-                case KeyEvent.VK_UP:  //键盘值   上
-                    y -= 5;
-                    break;
-                case KeyEvent.VK_LEFT: //键盘值   左
-                    x -= 5;
-                    break;
-                case KeyEvent.VK_RIGHT: //键盘值  右
-                    x += 5;
-                    break;
-                case KeyEvent.VK_DOWN:  //键盘值  下
-                    y += 5;
-                    break;
-            }
+            myTank.keyPressed(e);
         }
     }
 }

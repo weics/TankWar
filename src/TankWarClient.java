@@ -1,6 +1,8 @@
 import com.sun.corba.se.impl.orbutil.graph.Graph;
 
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -25,7 +27,6 @@ public class TankWarClient extends Frame {
         g.setColor(Color.RED);      //设置坦克的颜色为红色
         g.fillOval(x,y,20,20);    //   坦克的大小为半径20
         g.setColor(c);
-        y = y +5;
     }
 
     //使用双缓冲解决图像在显示的时候的不连贯的问题
@@ -62,8 +63,11 @@ public class TankWarClient extends Frame {
                 System.exit(0);     //关闭游戏
             }
         });
+
+
         this.setResizable(false);   //让游戏框的大小不可变
         this.setVisible(true);      //让游戏框可见
+        this.addKeyListener(new KeyMonitor());
 
         new Thread( new PaintThread()).start();
     }
@@ -86,6 +90,27 @@ public class TankWarClient extends Frame {
                 }
             }
         }
+    }
 
+    //使用一个私有的键盘监听方法来监听键盘的记录   来控制坦克的移动方向
+    private class KeyMonitor extends KeyAdapter {
+        @Override
+        public void keyPressed(KeyEvent e) {
+            int key = e.getKeyCode();//获取键盘的按键的值
+            switch(key) {
+                case KeyEvent.VK_UP:  //键盘值   上
+                    y -= 5;
+                    break;
+                case KeyEvent.VK_LEFT: //键盘值   左
+                    x -= 5;
+                    break;
+                case KeyEvent.VK_RIGHT: //键盘值  右
+                    x += 5;
+                    break;
+                case KeyEvent.VK_DOWN:  //键盘值  下
+                    y += 5;
+                    break;
+            }
+        }
     }
 }

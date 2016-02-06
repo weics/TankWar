@@ -14,6 +14,7 @@ public class TankWarClient extends Frame {
 
     int x = 50;
     int y = 50;
+    Image offScreenImage = null;
 
     //画出坦克的原型
     public void paint(Graphics g) {
@@ -22,6 +23,25 @@ public class TankWarClient extends Frame {
         g.fillOval(x,y,20,20);    //设置坦克的位置距离左上角为：50 50    坦克的大小为半径20
         g.setColor(c);
         y = y +5;
+    }
+
+    //使用双缓冲解决图像在显示的时候的不连贯的问题
+    @Override
+    //使用一个虚拟的图片接收操作，然后一次性的复写到顶层图片(即显示给用户看的图片)
+    public void update(Graphics g) {
+
+        if (offScreenImage == null) {
+            offScreenImage = this.createImage(800,600);     //设置的虚拟图片必须与原始的图片的大小一致
+        }
+
+        Graphics goffScreenImage = offScreenImage.getGraphics();//新建虚拟图片的画笔
+        Color c = goffScreenImage.getColor();   //获取虚拟画笔的颜色
+        goffScreenImage.setColor(Color.BLUE);   //设置虚拟画笔的颜色为原始图片的颜色，实际的作用是清空上次的画面
+        goffScreenImage.fillRect(0,0,800,600);  //(0,0)表示虚拟画笔的离左上角的位置  可以与原始图片的位置不一致，只要大小一致就可以
+        goffScreenImage.setColor(c);            //将虚拟画笔的颜色改为原始的颜色
+        paint(goffScreenImage);                 //将虚拟的图片复写到顶层图片上
+        g.drawImage(offScreenImage,0,0,null);
+
     }
 
     //游戏窗口的函数
@@ -35,6 +55,7 @@ public class TankWarClient extends Frame {
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
+
                 System.exit(0);     //关闭游戏
             }
         });
@@ -56,7 +77,7 @@ public class TankWarClient extends Frame {
             while (true) {
                 try {
                     repaint();
-                    Thread.sleep(100);
+                    Thread.sleep(50);   //进程睡眠的时间
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

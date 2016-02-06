@@ -12,7 +12,10 @@ import java.awt.event.WindowEvent;
 
 public class TankWarClient extends Frame {
 
-    int x = 50;
+    public static final int  GAME_WIDTH = 800;
+    public static final int  GAME_LENGTH = 600;
+
+    int x = 50;     //设置坦克的位置距离左上角为：50 50
     int y = 50;
     Image offScreenImage = null;
 
@@ -20,7 +23,7 @@ public class TankWarClient extends Frame {
     public void paint(Graphics g) {
         Color c = g.getColor();
         g.setColor(Color.RED);      //设置坦克的颜色为红色
-        g.fillOval(x,y,20,20);    //设置坦克的位置距离左上角为：50 50    坦克的大小为半径20
+        g.fillOval(x,y,20,20);    //   坦克的大小为半径20
         g.setColor(c);
         y = y +5;
     }
@@ -31,13 +34,13 @@ public class TankWarClient extends Frame {
     public void update(Graphics g) {
 
         if (offScreenImage == null) {
-            offScreenImage = this.createImage(800,600);     //设置的虚拟图片必须与原始的图片的大小一致
+            offScreenImage = this.createImage(GAME_WIDTH,GAME_LENGTH);     //设置的虚拟图片必须与原始的图片的大小一致
         }
 
         Graphics goffScreenImage = offScreenImage.getGraphics();//新建虚拟图片的画笔
         Color c = goffScreenImage.getColor();   //获取虚拟画笔的颜色
         goffScreenImage.setColor(Color.BLUE);   //设置虚拟画笔的颜色为原始图片的颜色，实际的作用是清空上次的画面
-        goffScreenImage.fillRect(0,0,800,600);  //(0,0)表示虚拟画笔的离左上角的位置  可以与原始图片的位置不一致，只要大小一致就可以
+        goffScreenImage.fillRect(0,0,GAME_WIDTH,GAME_LENGTH);  //(0,0)表示虚拟画笔的离左上角的位置  可以与原始图片的位置不一致，只要大小一致就可以
         goffScreenImage.setColor(c);            //将虚拟画笔的颜色改为原始的颜色
         paint(goffScreenImage);                 //将虚拟的图片复写到顶层图片上
         g.drawImage(offScreenImage,0,0,null);
@@ -48,7 +51,7 @@ public class TankWarClient extends Frame {
     public void lanchFrame(){
         this.setBackground(Color.BLUE);
         this.setLocation(300,100);  //定义游戏框离电脑左上角的距离  距离电脑左边：300   距离电脑上边：100
-        this.setSize(800,600);      //定义游戏框的大小    宽：800  高：600
+        this.setSize(GAME_WIDTH,GAME_LENGTH);      //定义游戏框的大小
         this.setTitle("TankWar");   //定义标题栏的名字为：TankWar
 
         //设置一个监听器  监听窗口关闭的操作

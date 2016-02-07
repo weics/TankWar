@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
  */
 public class Tank {
 
+
     public static final int XSPEED = 5; //x轴方向的速度
     public static final int YSPEED = 5; //x轴方向的速度
     int x; //设置坦克的位置距离左上角的水平距离
@@ -52,7 +53,7 @@ public class Tank {
                 y -= YSPEED;
                 break;
             case RU:
-                x -= XSPEED;
+                x += XSPEED;
                 y -= YSPEED;
                 break;
             case R:
@@ -112,6 +113,26 @@ public class Tank {
                 break;
             case KeyEvent.VK_DOWN:  //键盘值  下
                 bD = true;
+                break;
+        }
+        locationdir();//根据键盘记录的code码，获取坦克的方向
+    }
+
+
+    public void keyReleased(KeyEvent e) {
+        int key = e.getKeyCode();//获取键盘的按键的值
+        switch(key) {
+            case KeyEvent.VK_LEFT: //键盘值   左
+                bL = false;
+                break;
+            case KeyEvent.VK_UP:  //键盘值   上
+                bU = false;
+                break;
+            case KeyEvent.VK_RIGHT: //键盘值  右
+                bR = false;
+                break;
+            case KeyEvent.VK_DOWN:  //键盘值  下
+                bD = false;
                 break;
         }
         locationdir();//根据键盘记录的code码，获取坦克的方向

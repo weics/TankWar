@@ -161,7 +161,7 @@ public class Tank {
         locationdir();//根据键盘记录的code码，获取坦克的方向
     }
 
-
+    //监听按键的松开的的函数
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();//获取键盘的按键的值
         switch(key) {

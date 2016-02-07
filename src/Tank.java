@@ -25,7 +25,8 @@ public class Tank {
 
     enum Dircetion  {L,LU,U,RU,R,RD,D,LD,STOP}
 
-    Dircetion dir = Dircetion.STOP;//初始化方向为停止
+    private Dircetion dir = Dircetion.STOP;//初始化坦克的方向为停止
+    private Dircetion ptdir = Dircetion.D;//设置炮筒的方向
 
     //构造函数
     public Tank(int x ,int y){
@@ -45,7 +46,32 @@ public class Tank {
         g.setColor(Color.RED);      //设置坦克的颜色为红色
         g.fillOval(x,y,WIDTH,HEIGHT);
         g.setColor(c);
-
+        switch(ptdir) {
+            case L:
+                g.drawLine(x + Tank.WIDTH/2, y + Tank.HEIGHT/2, x, y + Tank.HEIGHT/2);
+                break;
+            case LU:
+                g.drawLine(x + Tank.WIDTH/2, y + Tank.HEIGHT/2, x, y);
+                break;
+            case U:
+                g.drawLine(x + Tank.WIDTH/2, y + Tank.HEIGHT/2, x + Tank.WIDTH/2, y);
+                break;
+            case RU:
+                g.drawLine(x + Tank.WIDTH/2, y + Tank.HEIGHT/2, x + Tank.WIDTH, y);
+                break;
+            case R:
+                g.drawLine(x + Tank.WIDTH/2, y + Tank.HEIGHT/2, x + Tank.WIDTH, y + Tank.HEIGHT/2);
+                break;
+            case RD:
+                g.drawLine(x + Tank.WIDTH/2, y + Tank.HEIGHT/2, x + Tank.WIDTH, y + Tank.HEIGHT);
+                break;
+            case D:
+                g.drawLine(x + Tank.WIDTH/2, y + Tank.HEIGHT/2, x + Tank.WIDTH/2, y + Tank.HEIGHT);
+                break;
+            case LD:
+                g.drawLine(x + Tank.WIDTH/2, y + Tank.HEIGHT/2, x , y + Tank.HEIGHT);
+                break;
+        }
         move();     //坦克移动的函数
     }
 
@@ -106,6 +132,10 @@ public class Tank {
         } else if(!bL && !bU && !bR && !bD){
             dir = Dircetion.STOP;
         }
+
+        if(this.dir != Dircetion.STOP){
+            this.ptdir = this.dir;
+        }
     }
 
     //监听键盘的记录   来控制坦克的移动方向
@@ -155,7 +185,7 @@ public class Tank {
     public Missile fire(){
         int x= this.x + Tank.WIDTH/2 - Missile.WIDTH/2;//使子弹射出的位置是坦克的中心
         int y = this.y + Tank.HEIGHT/2 - Missile.HEIGHT/2;
-        Missile m = new Missile(x,y,dir);
+        Missile m = new Missile(x,y,ptdir);
         return m;
     }
 

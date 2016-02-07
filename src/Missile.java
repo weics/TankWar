@@ -7,9 +7,10 @@ public class Missile {
 
     public static final int XSPEED = 10;//子弹的x轴方向的速度
     public static final int YSPEED = 10;//子弹的y轴方向的速度
-
-    int x ;
-    int y ;
+    public static final int WIDTH =10;  //子弹的宽度
+    public static final int HEIGHT = 10;//子弹的高度
+    int x ;//子弹的水平位置
+    int y ;//子弹的垂直位置
     Tank.Dircetion dir ;   //获取坦克的方向  以便是子弹的与坦克的方向一致
 
     public Missile(int x, int y, Tank.Dircetion dir) {
@@ -22,7 +23,7 @@ public class Missile {
     public void draw(Graphics g){
         Color c = g.getColor();
         g.setColor(Color.BLACK);
-        g.fillOval(x,y,10,10);
+        g.fillOval(x,y,WIDTH,HEIGHT);
         g.setColor(c);
         move();
     }

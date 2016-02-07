@@ -19,14 +19,16 @@ public class TankWarClient extends Frame {
 
     Image offScreenImage = null;
 
-    Tank myTank = new Tank(50,50);                  //创建一个坦克的对象
-    Missile m = new Missile(50,50,Tank.Dircetion.R);//创建一个子弹的对象
+    Tank myTank = new Tank(50,50,this);                  //创建一个坦克的对象
+    Missile m = null;//创建一个子弹的对象
 
 
     public void paint(Graphics g) {
 
         myTank.draw(g); //画出坦克的原型
-        m.draw(g);      //画出子弹的原型
+        if(m != null) {
+            m.draw(g);  //画出子弹的原型
+        }
     }
 
     //使用双缓冲解决图像在显示的时候的不连贯的问题
@@ -56,18 +58,14 @@ public class TankWarClient extends Frame {
 
         //设置一个监听器  监听窗口关闭的操作
         this.addWindowListener(new WindowAdapter() {
-            @Override
             public void windowClosing(WindowEvent e) {
-
                 System.exit(0);     //关闭游戏
             }
         });
 
-
         this.setResizable(false);   //让游戏框的大小不可变
         this.setVisible(true);      //让游戏框可见
         this.addKeyListener(new KeyMonitor());
-
         new Thread( new PaintThread()).start();
     }
 
@@ -93,12 +91,9 @@ public class TankWarClient extends Frame {
 
     //使用一个私有的键盘监听方法来监听键盘的记录   来控制坦克的移动方向
     private class KeyMonitor extends KeyAdapter {
-        @Override
         public void keyPressed(KeyEvent e) {
             myTank.keyPressed(e);
         }
-
-        @Override
         public void keyReleased(KeyEvent e) {
             myTank.keyReleased(e);
         }

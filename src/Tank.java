@@ -10,8 +10,12 @@ public class Tank {
 
     public static final int XSPEED = 5; //x轴方向的速度
     public static final int YSPEED = 5; //x轴方向的速度
+    public static final int WIDTH = 20; //坦克的宽度
+    public static final int HEIGHT = 20;//坦克的高度
     int x; //设置坦克的位置距离左上角的水平距离
     int y; //设置坦克的位置距离左上角的垂直距离
+
+    TankWarClient tc;
 
     //定义四个布尔变量来判断方向的确定  初始化全部为false
     private boolean bL=false;
@@ -29,11 +33,17 @@ public class Tank {
         this.y = y;
     }
 
+    public Tank(int x ,int y,TankWarClient tc){
+        this(x,y);
+        this.tc = tc;
+    }
+
+
     //使用画笔来创建坦克
     public void draw(Graphics g){
         Color c = g.getColor();
         g.setColor(Color.RED);      //设置坦克的颜色为红色
-        g.fillOval(x,y,20,20);    //   坦克的大小为半径20
+        g.fillOval(x,y,WIDTH,HEIGHT);
         g.setColor(c);
 
         move();     //坦克移动的函数
@@ -102,6 +112,9 @@ public class Tank {
     public void  keyPressed(KeyEvent e) {
         int key = e.getKeyCode();//获取键盘的按键的值
         switch(key) {
+            case KeyEvent.VK_CONTROL:
+               tc.m = fire();
+                break;
             case KeyEvent.VK_LEFT: //键盘值   左
                 bL = true;
                 break;
@@ -136,6 +149,14 @@ public class Tank {
                 break;
         }
         locationdir();//根据键盘记录的code码，获取坦克的方向
+    }
+
+    //子弹的发射
+    public Missile fire(){
+        int x= this.x + Tank.WIDTH/2 - Missile.WIDTH/2;//使子弹射出的位置是坦克的中心
+        int y = this.y + Tank.HEIGHT/2 - Missile.HEIGHT/2;
+        Missile m = new Missile(x,y,dir);
+        return m;
     }
 
 

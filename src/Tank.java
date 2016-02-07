@@ -46,7 +46,7 @@ public class Tank {
         g.setColor(Color.RED);      //设置坦克的颜色为红色
         g.fillOval(x,y,WIDTH,HEIGHT);
         g.setColor(c);
-        switch(ptdir) {
+        switch(ptdir) {         //选择炮筒的方向  使得炮筒的方向与坦克的方向一致
             case L:
                 g.drawLine(x + Tank.WIDTH/2, y + Tank.HEIGHT/2, x, y + Tank.HEIGHT/2);
                 break;
@@ -188,6 +188,5 @@ public class Tank {
         Missile m = new Missile(x,y,ptdir);
         return m;
     }
-
 
 }

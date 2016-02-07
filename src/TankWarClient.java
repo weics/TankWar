@@ -19,15 +19,17 @@ public class TankWarClient extends Frame {
 
     Image offScreenImage = null;
 
-    Tank myTank = new Tank(50,50);
+    Tank myTank = new Tank(50,50);                  //创建一个坦克的对象
+    Missile m = new Missile(50,50,Tank.Dircetion.R);//创建一个子弹的对象
 
-    //画出坦克的原型
+
     public void paint(Graphics g) {
-       myTank.draw(g);
+
+        myTank.draw(g); //画出坦克的原型
+        m.draw(g);      //画出子弹的原型
     }
 
     //使用双缓冲解决图像在显示的时候的不连贯的问题
-    @Override
     //使用一个虚拟的图片接收操作，然后一次性的复写到顶层图片(即显示给用户看的图片)
     public void update(Graphics g) {
 

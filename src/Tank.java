@@ -23,19 +23,22 @@ public class Tank {
     private boolean bR=false;
     private boolean bD=false;
 
+    private boolean beGood ;
+
     enum Dircetion  {L,LU,U,RU,R,RD,D,LD,STOP}
 
     private Dircetion dir = Dircetion.STOP;//初始化坦克的方向为停止
     private Dircetion ptdir = Dircetion.D;//设置炮筒的方向
 
     //构造函数
-    public Tank(int x ,int y){
+    public Tank(int x ,int y,boolean beGood){
         this.x = x;
         this.y = y;
+        this.beGood = beGood;
     }
 
-    public Tank(int x ,int y,TankWarClient tc){
-        this(x,y);
+    public Tank(int x ,int y,boolean beGood,TankWarClient tc){
+        this(x,y,beGood);
         this.tc = tc;
     }
 
@@ -43,7 +46,13 @@ public class Tank {
     //使用画笔来创建坦克
     public void draw(Graphics g){
         Color c = g.getColor();
-        g.setColor(Color.RED);      //设置坦克的颜色为红色
+        if(beGood){
+            g.setColor(Color.RED);      //设置坦克的颜色为红色
+        } else {
+            g.setColor(Color.BLUE);     //设置敌方的坦克颜色为红色
+        }
+
+
         g.fillOval(x,y,WIDTH,HEIGHT);
         g.setColor(c);
         switch(ptdir) {         //选择炮筒的方向  使得炮筒的方向与坦克的方向一致

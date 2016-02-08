@@ -11,12 +11,24 @@ public class Missile {
     public static final int HEIGHT = 10;//子弹的高度
     int x ;//子弹的水平位置
     int y ;//子弹的垂直位置
+
+    private boolean missileslive = true;
     Tank.Dircetion dir ;   //获取坦克的方向  以便是子弹的与坦克的方向一致
+    TankWarClient tc;
 
     public Missile(int x, int y, Tank.Dircetion dir) {
         this.x = x;
         this.y = y;
         this.dir = dir;
+    }
+
+    public Missile(int x, int y, Tank.Dircetion dir ,TankWarClient tc){
+        this(x,y,dir);
+        this.tc = tc;
+    }
+
+    public boolean ismissileslive (){
+        return missileslive;
     }
 
     //用画笔画出坦克
@@ -60,6 +72,11 @@ public class Missile {
                 x -= XSPEED;
                 y += YSPEED;
                 break;
+        }
+
+        if (x < 0 || y < 0 || x > TankWarClient.GAME_WIDTH || y > TankWarClient.GAME_LENGTH){
+            missileslive = false;
+            tc.missiles.remove(this);
         }
     }
 

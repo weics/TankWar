@@ -109,6 +109,23 @@ public class Tank {
             case STOP:
                 break;
         }
+
+        //使坦克在遇到游戏的边框的时候归位  使其不能越过边框
+        if(x < 0 ){
+            x = 0;
+        }
+
+        if(y < 25 ){
+            y = 25;
+        }
+
+        if(x + Tank.WIDTH > TankWarClient.GAME_WIDTH ){
+            x = TankWarClient.GAME_WIDTH - Tank.WIDTH;
+        }
+
+        if(y + Tank.HEIGHT > TankWarClient.GAME_LENGTH){
+            y = TankWarClient.GAME_LENGTH - Tank.HEIGHT;
+        }
     }
 
     //从键盘的记录上获取坦克该往哪个方向变化
@@ -186,7 +203,7 @@ public class Tank {
     public Missile fire(){
         int x= this.x + Tank.WIDTH/2 - Missile.WIDTH/2;//使子弹射出的位置是坦克的中心
         int y = this.y + Tank.HEIGHT/2 - Missile.HEIGHT/2;
-        Missile m = new Missile(x,y,ptdir);
+        Missile m = new Missile(x,y,ptdir,this.tc);
         tc.missiles.add(m);
         return m;
     }

@@ -23,7 +23,20 @@ public class Tank {
     private boolean bR=false;
     private boolean bD=false;
 
-    private boolean beGood ;
+    private boolean beGood ;//控制坦克是否为友方坦克还是敌方坦克
+    private boolean beLive = true;//控制坦克生存状态  即坦克是否被子弹击中死亡
+
+    //坦克的生存状态的get方法
+    public boolean isBeLive() {
+        return beLive;
+    }
+
+    //坦克的生存状态的set方法
+    public void setBeLive(boolean beLive) {
+        this.beLive = beLive;
+    }
+
+
 
     enum Dircetion  {L,LU,U,RU,R,RD,D,LD,STOP}
 
@@ -45,9 +58,13 @@ public class Tank {
 
     //使用画笔来创建坦克
     public void draw(Graphics g){
+        if(!beLive){
+            return ;
+        }
+
         Color c = g.getColor();
         if(beGood){
-            g.setColor(Color.RED);      //设置坦克的颜色为红色
+            g.setColor(Color.RED);      //设置友方坦克的颜色为红色
         } else {
             g.setColor(Color.BLUE);     //设置敌方的坦克颜色为红色
         }
@@ -215,6 +232,11 @@ public class Tank {
         Missile m = new Missile(x,y,ptdir,this.tc);
         tc.missiles.add(m);
         return m;
+    }
+
+    //定义坦克的getRect方法
+    public Rectangle getRect(){
+        return new Rectangle(x,y,WIDTH,HEIGHT);
     }
 
 }

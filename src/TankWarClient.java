@@ -31,6 +31,7 @@ public class TankWarClient extends Frame {
 
         for(int i= 0 ; i < missiles.size();i++){
             Missile m = missiles.get(i);//得到每个子弹的对象
+            m.hiTank(enemyTank);//判断子弹是否击中坦克
             m.draw(g);          //将每个子弹对象画出来
         }
 

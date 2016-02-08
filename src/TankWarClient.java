@@ -5,7 +5,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
+import java.util.ArrayList;
+import java.util.List;
 /**
  * Created by WEI on 2016/2/5.
  */
@@ -19,16 +20,20 @@ public class TankWarClient extends Frame {
 
     Image offScreenImage = null;
 
-    Tank myTank = new Tank(50,50,this);                  //创建一个坦克的对象
-    Missile m = null;//创建一个子弹的对象
+    Tank myTank = new Tank(50,50,this);//创建一个坦克的对象
+    List<Missile> missiles = new ArrayList<Missile>();//创建多个子弹的对象的集合
 
 
     public void paint(Graphics g) {
 
-        myTank.draw(g); //画出坦克的原型
-        if(m != null) {
-            m.draw(g);  //画出子弹的原型
+        g.drawString("missiles counts:"+missiles.size(),50,100);//在屏幕上显示子弹发射的数量
+
+        for(int i= 0 ; i < missiles.size();i++){
+            Missile m = missiles.get(i);//得到每个子弹的对象
+            m.draw(g);          //将每个子弹对象画出来
         }
+
+        myTank.draw(g); //画出坦克的原型
     }
 
     //使用双缓冲解决图像在显示的时候的不连贯的问题
@@ -41,7 +46,7 @@ public class TankWarClient extends Frame {
 
         Graphics goffScreenImage = offScreenImage.getGraphics();//新建虚拟图片的画笔
         Color c = goffScreenImage.getColor();   //获取虚拟画笔的颜色
-        goffScreenImage.setColor(Color.BLUE);   //设置虚拟画笔的颜色为原始图片的颜色，实际的作用是清空上次的画面
+        goffScreenImage.setColor(Color.GREEN);   //设置虚拟画笔的颜色为原始图片的颜色，实际的作用是清空上次的画面
         goffScreenImage.fillRect(0,0,GAME_WIDTH,GAME_LENGTH);  //(0,0)表示虚拟画笔的离左上角的位置  可以与原始图片的位置不一致，只要大小一致就可以
         goffScreenImage.setColor(c);            //将虚拟画笔的颜色改为原始的颜色
         paint(goffScreenImage);                 //将虚拟的图片复写到顶层图片上
@@ -51,7 +56,7 @@ public class TankWarClient extends Frame {
 
     //游戏窗口的函数
     public void lanchFrame(){
-        this.setBackground(Color.BLUE);
+        this.setBackground(Color.GREEN);
         this.setLocation(300,100);  //定义游戏框离电脑左上角的距离  距离电脑左边：300   距离电脑上边：100
         this.setSize(GAME_WIDTH,GAME_LENGTH);      //定义游戏框的大小
         this.setTitle("TankWar");   //定义标题栏的名字为：TankWar

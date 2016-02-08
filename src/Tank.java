@@ -142,9 +142,7 @@ public class Tank {
     public void  keyPressed(KeyEvent e) {
         int key = e.getKeyCode();//获取键盘的按键的值
         switch(key) {
-            case KeyEvent.VK_CONTROL:
-               tc.m = fire();
-                break;
+
             case KeyEvent.VK_LEFT: //键盘值   左
                 bL = true;
                 break;
@@ -165,6 +163,9 @@ public class Tank {
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();//获取键盘的按键的值
         switch(key) {
+            case KeyEvent.VK_CONTROL://当按下的control键松开的时候才开炮
+                fire();
+                break;
             case KeyEvent.VK_LEFT: //键盘值   左
                 bL = false;
                 break;
@@ -186,6 +187,7 @@ public class Tank {
         int x= this.x + Tank.WIDTH/2 - Missile.WIDTH/2;//使子弹射出的位置是坦克的中心
         int y = this.y + Tank.HEIGHT/2 - Missile.HEIGHT/2;
         Missile m = new Missile(x,y,ptdir);
+        tc.missiles.add(m);
         return m;
     }
 

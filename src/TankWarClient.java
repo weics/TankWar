@@ -22,6 +22,8 @@ public class TankWarClient extends Frame {
 
     Tank myTank = new Tank(50,50,true,this);//创建一个坦克的对象
     Tank enemyTank = new Tank(100,100,false,this);//创建一个敌方的坦克
+    Explode e = new Explode(70,70,this);//创建爆炸的对象
+
     List<Missile> missiles = new ArrayList<Missile>();//创建多个子弹的对象的集合
 
 
@@ -37,6 +39,7 @@ public class TankWarClient extends Frame {
 
         myTank.draw(g); //画出坦克的原型
         enemyTank.draw(g);//画出敌方坦克的原型
+        e.draw(g);//画出爆炸的原型
     }
 
     //使用双缓冲解决图像在显示的时候的不连贯的问题

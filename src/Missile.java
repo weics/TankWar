@@ -57,6 +57,8 @@ public class Missile {
         if(this.getRect().intersects(t.getRect()) && t.isBeLive()){
             t.setBeLive(false);//如果坦克被子弹击中  则设置坦克生存状态为false  则坦克的画出动作将不会执行
             this.missileslive = false;//坦克被子弹击中  设置击中坦克的子弹的消失
+            Explode e = new Explode(x,y,tc);
+            tc.explodes.add(e);
             return true;
         }
         return false;

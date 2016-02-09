@@ -22,6 +22,7 @@ public class Explode {
     public void draw (Graphics g){
         //判断爆炸的生存状态
         if(!live){
+            tc.explodes.remove(this);
             return;//如果爆炸的生存状态为false  则爆炸不产生
         }
 

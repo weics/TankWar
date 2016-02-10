@@ -23,8 +23,8 @@ public class Tank {
     private boolean bR=false;
     private boolean bD=false;
 
-    private boolean beGood ;//控制坦克是否为友方坦克还是敌方坦克
-    private boolean beLive = true;//控制坦克生存状态  即坦克是否被子弹击中死亡
+    private boolean beGood ;        //控制坦克是否为友方坦克还是敌方坦克
+    private boolean beLive = true;  //控制坦克生存状态  即坦克是否被子弹击中死亡
 
     //坦克的生存状态的get方法
     public boolean isBeLive() {
@@ -40,8 +40,8 @@ public class Tank {
 
     enum Dircetion  {L,LU,U,RU,R,RD,D,LD,STOP}
 
-    private Dircetion dir = Dircetion.STOP;//初始化坦克的方向为停止
-    private Dircetion ptdir = Dircetion.D;//设置炮筒的方向
+    private Dircetion dir = Dircetion.STOP; //初始化坦克的方向为停止
+    private Dircetion ptdir = Dircetion.D;  //设置炮筒的方向
 
     //构造函数
     public Tank(int x ,int y,boolean beGood){
@@ -59,6 +59,10 @@ public class Tank {
     //使用画笔来创建坦克
     public void draw(Graphics g){
         if(!beLive){
+            if(!beGood){
+                tc.tanks.remove(this);  //如果坦克为敌方坦克则将坦克从坦克对象的集合中删除
+
+            }
             return ;
         }
 
@@ -206,23 +210,23 @@ public class Tank {
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();//获取键盘的按键的值
         switch(key) {
-            case KeyEvent.VK_CONTROL://当按下的control键松开的时候才开炮
+            case KeyEvent.VK_CONTROL:   //当按下的control键松开的时候才开炮
                 fire();
                 break;
-            case KeyEvent.VK_LEFT: //键盘值   左
+            case KeyEvent.VK_LEFT:      //键盘值   左
                 bL = false;
                 break;
-            case KeyEvent.VK_UP:  //键盘值   上
+            case KeyEvent.VK_UP:        //键盘值   上
                 bU = false;
                 break;
-            case KeyEvent.VK_RIGHT: //键盘值  右
+            case KeyEvent.VK_RIGHT:     //键盘值  右
                 bR = false;
                 break;
-            case KeyEvent.VK_DOWN:  //键盘值  下
+            case KeyEvent.VK_DOWN:      //键盘值  下
                 bD = false;
                 break;
         }
-        locationdir();//根据键盘记录的code码，获取坦克的方向
+        locationdir();                  //根据键盘记录的code码，获取坦克的方向
     }
 
     //子弹的发射

@@ -21,19 +21,23 @@ public class TankWarClient extends Frame {
     Image offScreenImage = null;
 
     Tank myTank = new Tank(50,50,true,this);//创建一个坦克的对象
-    Tank enemyTank = new Tank(100,100,false,this);//创建一个敌方的坦克
+
 
     List<Explode> explodes = new ArrayList<Explode>();
     List<Missile> missiles = new ArrayList<Missile>();//创建多个子弹的对象的集合
+    List<Tank> tanks = new ArrayList<Tank>();
+
 
 
     public void paint(Graphics g) {
 
         g.drawString("missiles counts:"+missiles.size(),50,100);//在屏幕上显示子弹发射的数量
+        g.drawString("explodes counts:"+explodes.size(),50,120);//在屏幕上显示爆炸的的数量
+        g.drawString("tanks    counts:"+tanks.size(),50,140);   //在屏幕上显示敌方坦克的数量
 
         for(int i= 0 ; i < missiles.size();i++){
             Missile m = missiles.get(i);//得到每个子弹的对象
-            m.hiTank(enemyTank);//判断子弹是否击中坦克
+            m.hitTanks(tanks);
             m.draw(g);          //将每个子弹对象画出来
         }
 
@@ -42,8 +46,13 @@ public class TankWarClient extends Frame {
             e.draw(g);
         }
 
+        for (int i = 0 ; i < tanks.size() ; i++){
+            Tank t = tanks.get(i);
+            t.draw(g);
+        }
+
         myTank.draw(g); //画出坦克的原型
-        enemyTank.draw(g);//画出敌方坦克的原型
+
     }
 
     //使用双缓冲解决图像在显示的时候的不连贯的问题
@@ -66,6 +75,11 @@ public class TankWarClient extends Frame {
 
     //游戏窗口的函数
     public void lanchFrame(){
+
+        for(int i = 0 ; i < 10 ; i++) {
+            tanks.add(new Tank(50 + 40 *(i+1),50 , false,this));
+        }
+
         this.setBackground(Color.GREEN);
         this.setLocation(300,100);  //定义游戏框离电脑左上角的距离  距离电脑左边：300   距离电脑上边：100
         this.setSize(GAME_WIDTH,GAME_LENGTH);      //定义游戏框的大小

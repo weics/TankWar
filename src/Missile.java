@@ -1,5 +1,5 @@
 import java.awt.*;
-
+import java.util.List;
 /**
  * Created by WEI on 2016/2/7.
  */
@@ -14,7 +14,7 @@ public class Missile {
 
     private boolean missileslive = true;//定义一枚炮弹是否生存着
     Tank.Dircetion dir ;   //获取坦克的方向  以便是子弹的与坦克的方向一致
-    TankWarClient tc;
+    private TankWarClient tc;
 
     public Missile(int x, int y, Tank.Dircetion dir) {
         this.x = x;
@@ -60,6 +60,15 @@ public class Missile {
             Explode e = new Explode(x,y,tc);
             tc.explodes.add(e);
             return true;
+        }
+        return false;
+    }
+
+    public boolean hitTanks(List<Tank> tanks) {
+        for(int i = 0 ; i < tanks.size(); i++){
+            if(hiTank(tanks.get(i))){
+                return true;
+            }
         }
         return false;
     }

@@ -15,6 +15,8 @@ public class Missile {
     private boolean missileslive = true;//定义一枚炮弹是否生存着
     Tank.Dircetion dir ;   //获取坦克的方向  以便是子弹的与坦克的方向一致
     private TankWarClient tc;
+    private boolean good;//判断子弹的好坏
+
 
     public Missile(int x, int y, Tank.Dircetion dir) {
         this.x = x;
@@ -22,11 +24,14 @@ public class Missile {
         this.dir = dir;
     }
 
-    public Missile(int x, int y, Tank.Dircetion dir ,TankWarClient tc){
+    public Missile(int x, int y, Tank.Dircetion dir , boolean tankbeGood , TankWarClient tc){
         this(x,y,dir);
+        this.good = tankbeGood;
         this.tc = tc;
     }
 
+
+    //子弹的生存状态的get函数
     public boolean ismissileslive (){
         return missileslive;
     }
@@ -54,7 +59,7 @@ public class Missile {
     //判断坦克是否被子弹击中
     public boolean hiTank(Tank t){
         //使用getRect方法判断子弹和坦克是否在同一个矩形方框中
-        if(this.getRect().intersects(t.getRect()) && t.isBeLive()){
+        if(this.missileslive && this.getRect().intersects(t.getRect()) && t.isBeLive() && this.good != t.isTankBeGood() ){
             t.setBeLive(false);//如果坦克被子弹击中  则设置坦克生存状态为false  则坦克的画出动作将不会执行
             this.missileslive = false;//坦克被子弹击中  设置击中坦克的子弹的消失
             Explode e = new Explode(x,y,tc);

@@ -20,7 +20,7 @@ public class TankWarClient extends Frame {
 
     Image offScreenImage = null;
 
-    Tank myTank = new Tank(50,50,true,this);//创建一个坦克的对象
+    Tank myTank = new Tank(50,50,true, Tank.Dircetion.STOP,this);//创建一个坦克的对象
 
 
     List<Explode> explodes = new ArrayList<Explode>();
@@ -31,14 +31,15 @@ public class TankWarClient extends Frame {
 
     public void paint(Graphics g) {
 
-        g.drawString("missiles counts:"+missiles.size(),50,100);//在屏幕上显示子弹发射的数量
-        g.drawString("explodes counts:"+explodes.size(),50,120);//在屏幕上显示爆炸的的数量
-        g.drawString("tanks    counts:"+tanks.size(),50,140);   //在屏幕上显示敌方坦克的数量
+        g.drawString("missiles counts:"+missiles.size(),50,100);    //在屏幕上显示子弹发射的数量
+        g.drawString("explodes counts:"+explodes.size(),50,120);    //在屏幕上显示爆炸的的数量
+        g.drawString("tanks    counts:"+tanks.size(),50,140);       //在屏幕上显示敌方坦克的数量
 
         for(int i= 0 ; i < missiles.size();i++){
-            Missile m = missiles.get(i);//得到每个子弹的对象
-            m.hitTanks(tanks);
-            m.draw(g);          //将每个子弹对象画出来
+            Missile m = missiles.get(i);    //得到每个子弹的对象
+            m.hitTanks(tanks);              //敌方坦克击中会消失
+            m.hiTank(myTank);               //如果自己的坦克被敌方坦克击中  会消失
+            m.draw(g);                      //将每个子弹对象画出来
         }
 
         for(int i = 0 ; i < explodes.size() ; i++){
@@ -77,7 +78,7 @@ public class TankWarClient extends Frame {
     public void lanchFrame(){
 
         for(int i = 0 ; i < 10 ; i++) {
-            tanks.add(new Tank(50 + 40 *(i+1),50 , false,this));
+            tanks.add(new Tank(50 + 40 *(i+1),50 , false, Tank.Dircetion.D,this));
         }
 
         this.setBackground(Color.GREEN);

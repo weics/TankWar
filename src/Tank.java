@@ -1,6 +1,7 @@
 import javax.xml.xpath.XPath;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.Random;
 
 /**
  * Created by WEI on 2016/2/6.
@@ -23,8 +24,15 @@ public class Tank {
     private boolean bR=false;
     private boolean bD=false;
 
-    private boolean beGood ;        //控制坦克是否为友方坦克还是敌方坦克
+    public boolean isTankBeGood() {
+        return tankbeGood;
+    }
+
+    private boolean tankbeGood ;        //控制坦克是否为友方坦克还是敌方坦克
     private boolean beLive = true;  //控制坦克生存状态  即坦克是否被子弹击中死亡
+    private static Random r = new Random();
+
+    private int step = r.nextInt(12)+3;
 
     //坦克的生存状态的get方法
     public boolean isBeLive() {
@@ -47,11 +55,12 @@ public class Tank {
     public Tank(int x ,int y,boolean beGood){
         this.x = x;
         this.y = y;
-        this.beGood = beGood;
+        this.tankbeGood = beGood;
     }
 
-    public Tank(int x ,int y,boolean beGood,TankWarClient tc){
+    public Tank(int x ,int y,boolean beGood,Dircetion dir,TankWarClient tc){
         this(x,y,beGood);
+        this.dir = dir ;
         this.tc = tc;
     }
 
@@ -59,7 +68,7 @@ public class Tank {
     //使用画笔来创建坦克
     public void draw(Graphics g){
         if(!beLive){
-            if(!beGood){
+            if(!tankbeGood){
                 tc.tanks.remove(this);  //如果坦克为敌方坦克则将坦克从坦克对象的集合中删除
 
             }
@@ -67,7 +76,7 @@ public class Tank {
         }
 
         Color c = g.getColor();
-        if(beGood){
+        if(tankbeGood){
             g.setColor(Color.RED);      //设置友方坦克的颜色为红色
         } else {
             g.setColor(Color.BLUE);     //设置敌方的坦克颜色为红色
@@ -140,6 +149,10 @@ public class Tank {
                 break;
         }
 
+        if(this.dir != Dircetion.STOP){
+            this.ptdir = this.dir;
+        }
+
         //使坦克在遇到游戏的边框的时候归位  使其不能越过边框
         if(x < 0 ){
             x = 0;
@@ -155,6 +168,22 @@ public class Tank {
 
         if(y + Tank.HEIGHT > TankWarClient.GAME_LENGTH){
             y = TankWarClient.GAME_LENGTH - Tank.HEIGHT;
+        }
+
+
+        if(!tankbeGood){
+            Dircetion[] dirs = Dircetion.values();
+            if(step == 0){
+                step = r.nextInt(12) + 3;
+                int rn = r.nextInt(dirs.length);
+                dir = dirs[rn];
+            }
+            step--;
+
+            if(r.nextInt(40) > 38 ) {
+                this.fire();
+            }
+
         }
     }
 
@@ -180,9 +209,7 @@ public class Tank {
             dir = Dircetion.STOP;
         }
 
-        if(this.dir != Dircetion.STOP){
-            this.ptdir = this.dir;
-        }
+
     }
 
     //监听键盘的记录   来控制坦克的移动方向
@@ -231,9 +258,12 @@ public class Tank {
 
     //子弹的发射
     public Missile fire(){
+        if(!beLive){
+            return null;
+        }
         int x= this.x + Tank.WIDTH/2 - Missile.WIDTH/2;//使子弹射出的位置是坦克的中心
         int y = this.y + Tank.HEIGHT/2 - Missile.HEIGHT/2;
-        Missile m = new Missile(x,y,ptdir,this.tc);
+        Missile m = new Missile(x,y,ptdir,tankbeGood,this.tc);
         tc.missiles.add(m);
         return m;
     }

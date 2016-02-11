@@ -1,7 +1,7 @@
 import javax.xml.xpath.XPath;
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created by WEI on 2016/2/6.
@@ -295,6 +295,21 @@ public class Tank {
         if(this.getRect().intersects(w.getRect())){
             this.stay();//当坦克撞到墙的时候就让坦克获取原来的位置  直到坦克的在一个画图的周期中坦克的位置离开了墙
         }
+    }
+
+
+    //判断坦克是否与坦克相撞的函数
+    public boolean collideWithTank(java.util.List<Tank> tanks) {
+        for(int i=0 ; i < tanks.size() ; i++){
+            Tank t = tanks.get(i);
+            if(this != t){
+                if(this.beLive && t.isBeLive() && this.getRect().intersects(t.getRect())){
+                    this.stay();
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 

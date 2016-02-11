@@ -55,6 +55,7 @@ public class TankWarClient extends Frame {
             Tank t = tanks.get(i);
             t.collideWithWall(w1);//判断坦克是否与墙相撞
             t.collideWithWall(w2);//判断坦克是否与墙相撞
+            t.collideWithTank(tanks);//判断坦克是否与坦克相撞
             t.draw(g);
         }
 

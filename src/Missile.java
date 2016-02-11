@@ -69,6 +69,14 @@ public class Missile {
         return false;
     }
 
+    public boolean hitWall(Wall w){
+        if(this.getRect().intersects(w.getRect())){
+            this.missileslive = false;
+            return true;
+        }
+        return false;
+    }
+
     public boolean hitTanks(List<Tank> tanks) {
         for(int i = 0 ; i < tanks.size(); i++){
             if(hiTank(tanks.get(i))){

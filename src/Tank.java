@@ -15,6 +15,8 @@ public class Tank {
     public static final int HEIGHT = 20;//坦克的高度
     int x; //设置坦克的位置距离左上角的水平距离
     int y; //设置坦克的位置距离左上角的垂直距离
+    private int oldX;//记录坦克撞到墙是的原始位置X轴
+    private int oldY;//记录坦克撞到墙是的原始位置Y轴
 
     TankWarClient tc;
 
@@ -28,11 +30,11 @@ public class Tank {
         return tankbeGood;
     }
 
-    private boolean tankbeGood ;        //控制坦克是否为友方坦克还是敌方坦克
+    private boolean tankbeGood ;    //控制坦克是否为友方坦克还是敌方坦克
     private boolean beLive = true;  //控制坦克生存状态  即坦克是否被子弹击中死亡
     private static Random r = new Random();
 
-    private int step = r.nextInt(12)+3;
+    private int step = r.nextInt(12)+3;//使用随机函数产生随机数随机数为0~11  不包括12  并且加上3
 
     //坦克的生存状态的get方法
     public boolean isBeLive() {
@@ -55,6 +57,8 @@ public class Tank {
     public Tank(int x ,int y,boolean beGood){
         this.x = x;
         this.y = y;
+        this.oldX = oldX;
+        this.oldY = oldY;
         this.tankbeGood = beGood;
     }
 
@@ -116,6 +120,11 @@ public class Tank {
 
     //坦克移动的八个方向   每个方向对应的距离变化
     public void  move(){
+
+        //记录原始的位置
+        this.oldX = x;
+        this.oldY = y;
+
         switch(dir) {
             case L:
                 x -= XSPEED;
@@ -172,7 +181,9 @@ public class Tank {
 
 
         if(!tankbeGood){
-            Dircetion[] dirs = Dircetion.values();
+            Dircetion[] dirs = Dircetion.values();//让方向dir中的对象变为数组
+
+            //每次11+3步之后就重新改变方向
             if(step == 0){
                 step = r.nextInt(12) + 3;
                 int rn = r.nextInt(dirs.length);
@@ -180,6 +191,7 @@ public class Tank {
             }
             step--;
 
+            //使坦克的发射子弹的速度不是十分的快  是发射子弹的概率为38/40
             if(r.nextInt(40) > 38 ) {
                 this.fire();
             }
@@ -272,5 +284,18 @@ public class Tank {
     public Rectangle getRect(){
         return new Rectangle(x,y,WIDTH,HEIGHT);
     }
+
+    //让坦克保持原来的位置
+    public void stay(){
+        this.x = oldX;
+        this.y = oldY;
+    }
+
+    public void  collideWithWall(Wall w) {
+        if(this.getRect().intersects(w.getRect())){
+            this.stay();//当坦克撞到墙的时候就让坦克获取原来的位置  直到坦克的在一个画图的周期中坦克的位置离开了墙
+        }
+    }
+
 
 }

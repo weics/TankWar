@@ -22,6 +22,8 @@ public class TankWarClient extends Frame {
 
     Tank myTank = new Tank(50,50,true, Tank.Dircetion.STOP,this);//创建一个坦克的对象
 
+    Wall w1 = new Wall(300,200,100,30,this);    //创建墙1的对象
+    Wall w2 = new Wall(200,300,30,100,this);    //创建墙2的对象
 
     List<Explode> explodes = new ArrayList<Explode>();
     List<Missile> missiles = new ArrayList<Missile>();//创建多个子弹的对象的集合
@@ -39,6 +41,8 @@ public class TankWarClient extends Frame {
             Missile m = missiles.get(i);    //得到每个子弹的对象
             m.hitTanks(tanks);              //敌方坦克击中会消失
             m.hiTank(myTank);               //如果自己的坦克被敌方坦克击中  会消失
+            m.hitWall(w1);                  //判断子弹是否与墙1相撞
+            m.hitWall(w2);                  //判断子弹是否与墙2相撞
             m.draw(g);                      //将每个子弹对象画出来
         }
 
@@ -49,10 +53,14 @@ public class TankWarClient extends Frame {
 
         for (int i = 0 ; i < tanks.size() ; i++){
             Tank t = tanks.get(i);
+            t.collideWithWall(w1);//判断坦克是否与墙相撞
+            t.collideWithWall(w2);//判断坦克是否与墙相撞
             t.draw(g);
         }
 
         myTank.draw(g); //画出坦克的原型
+        w1.draw(g);//画出墙1
+        w2.draw(g);//画出墙2
 
     }
 

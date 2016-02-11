@@ -264,6 +264,9 @@ public class Tank {
             case KeyEvent.VK_DOWN:      //键盘值  下
                 bD = false;
                 break;
+            case KeyEvent.VK_A:         //超级炮弹的按键
+                superfire();
+                break;
         }
         locationdir();                  //根据键盘记录的code码，获取坦克的方向
     }
@@ -276,6 +279,18 @@ public class Tank {
         int x= this.x + Tank.WIDTH/2 - Missile.WIDTH/2;//使子弹射出的位置是坦克的中心
         int y = this.y + Tank.HEIGHT/2 - Missile.HEIGHT/2;
         Missile m = new Missile(x,y,ptdir,tankbeGood,this.tc);
+        tc.missiles.add(m);
+        return m;
+    }
+
+
+    public Missile fire(Dircetion dir ){
+        if(!beLive){
+            return null;
+        }
+        int x= this.x + Tank.WIDTH/2 - Missile.WIDTH/2;//使子弹射出的位置是坦克的中心
+        int y = this.y + Tank.HEIGHT/2 - Missile.HEIGHT/2;
+        Missile m = new Missile(x,y,dir,tankbeGood,this.tc);
         tc.missiles.add(m);
         return m;
     }
@@ -310,6 +325,15 @@ public class Tank {
             }
         }
         return false;
+    }
+
+
+    //超级开火的功能
+    public void superfire (){
+        Dircetion[] dirs = Dircetion.values();
+        for(int i = 0 ; i < 8 ; i++){
+            fire(dirs[i]);
+        }
     }
 
 

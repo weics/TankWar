@@ -1,12 +1,16 @@
 import com.sun.corba.se.impl.orbutil.graph.Graph;
 
+
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
+
 /**
  * Created by WEI on 2016/2/5.
  */
@@ -17,6 +21,8 @@ public class TankWarClient extends Frame {
 
     public static final int  GAME_WIDTH = 800;
     public static final int  GAME_LENGTH = 600;
+
+
 
     Image offScreenImage = null;
 
@@ -41,8 +47,9 @@ public class TankWarClient extends Frame {
         g.drawString("tanks      life:"+myTank.getLife(),50,160);       //在屏幕上显示敌方坦克的数量
 
         //判断敌方坦克是否死了   如果死了  就重新生成坦克
+
         if(tanks.size() <= 0){
-            for(int i = 0 ; i < 10 ; i++) {
+            for(int i = 0 ; i < Integer.parseInt(Propertiesmanager.getProperty("retankcount")); i++) {
                 tanks.add(new Tank(50 + 40 *(i+1),50 , false, Direction.D,this));
             }
         }
@@ -98,7 +105,11 @@ public class TankWarClient extends Frame {
     //游戏窗口的函数
     public void lanchFrame(){
 
-        for(int i = 0 ; i < 10 ; i++) {
+
+
+        int inittankcount = Integer.parseInt(Propertiesmanager.getProperty("inittankcount"));
+
+        for(int i = 0 ; i < inittankcount ; i++) {
             tanks.add(new Tank(50 + 40 *(i+1),50 , false, Direction.D,this));
         }
 

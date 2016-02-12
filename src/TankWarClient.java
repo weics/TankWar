@@ -20,7 +20,7 @@ public class TankWarClient extends Frame {
 
     Image offScreenImage = null;
 
-    Tank myTank = new Tank(50,50,true, Tank.Dircetion.STOP,this);//创建一个坦克的对象
+    Tank myTank = new Tank(50,50,true, Direction.STOP,this);//创建一个坦克的对象
 
     Wall w1 = new Wall(300,200,100,30,this);    //创建墙1的对象
     Wall w2 = new Wall(200,300,30,100,this);    //创建墙2的对象
@@ -43,7 +43,7 @@ public class TankWarClient extends Frame {
         //判断敌方坦克是否死了   如果死了  就重新生成坦克
         if(tanks.size() <= 0){
             for(int i = 0 ; i < 10 ; i++) {
-                tanks.add(new Tank(50 + 40 *(i+1),50 , false, Tank.Dircetion.D,this));
+                tanks.add(new Tank(50 + 40 *(i+1),50 , false, Direction.D,this));
             }
         }
 
@@ -66,10 +66,10 @@ public class TankWarClient extends Frame {
             t.collideWithWall(w1);//判断坦克是否与墙相撞
             t.collideWithWall(w2);//判断坦克是否与墙相撞
             t.collideWithTank(tanks);//判断坦克是否与坦克相撞
-            t.eatBlood(b);//判断坦克是否将血块吃掉
             t.draw(g);
         }
 
+        myTank.eatBlood(b);//判断坦克是否将血块吃掉
         myTank.draw(g); //画出坦克的原型
         w1.draw(g);//画出墙1
         w2.draw(g);//画出墙2
@@ -99,7 +99,7 @@ public class TankWarClient extends Frame {
     public void lanchFrame(){
 
         for(int i = 0 ; i < 10 ; i++) {
-            tanks.add(new Tank(50 + 40 *(i+1),50 , false, Tank.Dircetion.D,this));
+            tanks.add(new Tank(50 + 40 *(i+1),50 , false, Direction.D,this));
         }
 
         this.setBackground(Color.GREEN);

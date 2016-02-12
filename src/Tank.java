@@ -58,10 +58,10 @@ public class Tank {
 
 
 
-    enum Dircetion  {L,LU,U,RU,R,RD,D,LD,STOP}
+    //enum Dircetion  {L,LU,U,RU,R,RD,D,LD,STOP}
 
-    private Dircetion dir = Dircetion.STOP; //初始化坦克的方向为停止
-    private Dircetion ptdir = Dircetion.D;  //设置炮筒的方向
+    private Direction dir = Direction.STOP; //初始化坦克的方向为停止
+    private Direction ptdir = Direction.D;  //设置炮筒的方向
 
     //构造函数
     public Tank(int x ,int y,boolean beGood){
@@ -72,7 +72,7 @@ public class Tank {
         this.tankbeGood = beGood;
     }
 
-    public Tank(int x ,int y,boolean beGood,Dircetion dir,TankWarClient tc){
+    public Tank(int x ,int y,boolean beGood,Direction dir,TankWarClient tc){
         this(x,y,beGood);
         this.dir = dir ;
         this.tc = tc;
@@ -173,7 +173,7 @@ public class Tank {
                 break;
         }
 
-        if(this.dir != Dircetion.STOP){
+        if(this.dir != Direction.STOP){
             this.ptdir = this.dir;
         }
 
@@ -196,7 +196,7 @@ public class Tank {
 
 
         if(!tankbeGood){
-            Dircetion[] dirs = Dircetion.values();//让方向dir中的对象变为数组
+            Direction[] dirs = Direction.values();//让方向dir中的对象变为数组
 
             //每次11+3步之后就重新改变方向
             if(step == 0){
@@ -217,23 +217,23 @@ public class Tank {
     //从键盘的记录上获取坦克该往哪个方向变化
     public void locationdir(){
         if(bL && !bU && !bR && !bD){
-            dir = Dircetion.L;
+            dir = Direction.L;
         } else if(bL && bU && !bR && !bD){
-            dir = Dircetion.LU;
+            dir = Direction.LU;
         } else if(!bL && bU && !bR && !bD){
-            dir = Dircetion.U;
+            dir = Direction.U;
         } else if(!bL && bU && bR && !bD){
-            dir = Dircetion.RU;
+            dir = Direction.RU;
         } else if(!bL && !bU && bR && !bD){
-            dir = Dircetion.R;
+            dir = Direction.R;
         } else if(!bL && !bU && bR && bD){
-            dir = Dircetion.RD;
+            dir = Direction.RD;
         } else if(!bL && !bU && !bR && bD){
-            dir = Dircetion.D;
+            dir = Direction.D;
         } else if(bL && !bU && !bR && bD){
-            dir = Dircetion.LD;
+            dir = Direction.LD;
         } else if(!bL && !bU && !bR && !bD){
-            dir = Dircetion.STOP;
+            dir = Direction.STOP;
         }
 
 
@@ -305,7 +305,7 @@ public class Tank {
     }
 
 
-    public Missile fire(Dircetion dir ){
+    public Missile fire(Direction dir ){
         if(!beLive){
             return null;
         }
@@ -351,7 +351,7 @@ public class Tank {
 
     //超级开火的功能
     public void superfire (){
-        Dircetion[] dirs = Dircetion.values();
+        Direction[] dirs = Direction.values();
         for(int i = 0 ; i < 8 ; i++){
             fire(dirs[i]);
         }

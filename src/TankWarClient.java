@@ -33,9 +33,10 @@ public class TankWarClient extends Frame {
 
     public void paint(Graphics g) {
 
-        g.drawString("missiles counts:"+missiles.size(),50,100);    //在屏幕上显示子弹发射的数量
-        g.drawString("explodes counts:"+explodes.size(),50,120);    //在屏幕上显示爆炸的的数量
-        g.drawString("tanks    counts:"+tanks.size(),50,140);       //在屏幕上显示敌方坦克的数量
+        g.drawString("missiles counts:"+missiles.size(),50,100);        //在屏幕上显示子弹发射的数量
+        g.drawString("explodes counts:"+explodes.size(),50,120);        //在屏幕上显示爆炸的的数量
+        g.drawString("tanks    counts:"+tanks.size()   ,50,140);        //在屏幕上显示敌方坦克的数量
+        g.drawString("tanks      life:"+myTank.getLife(),50,160);       //在屏幕上显示敌方坦克的数量
 
         for(int i= 0 ; i < missiles.size();i++){
             Missile m = missiles.get(i);    //得到每个子弹的对象

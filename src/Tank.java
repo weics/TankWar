@@ -17,6 +17,7 @@ public class Tank {
     int y; //设置坦克的位置距离左上角的垂直距离
     private int oldX;//记录坦克撞到墙是的原始位置X轴
     private int oldY;//记录坦克撞到墙是的原始位置Y轴
+    private int life = 100;//设置坦克的初始血量为100
 
     TankWarClient tc;
 
@@ -44,6 +45,14 @@ public class Tank {
     //坦克的生存状态的set方法
     public void setBeLive(boolean beLive) {
         this.beLive = beLive;
+    }
+
+    public int getLife() {
+        return life;
+    }
+
+    public void  setLife(int life) {
+        this.life = life ;
     }
 
 

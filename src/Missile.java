@@ -60,7 +60,15 @@ public class Missile {
     public boolean hiTank(Tank t){
         //使用getRect方法判断子弹和坦克是否在同一个矩形方框中
         if(this.missileslive && this.getRect().intersects(t.getRect()) && t.isBeLive() && this.good != t.isTankBeGood() ){
-            t.setBeLive(false);//如果坦克被子弹击中  则设置坦克生存状态为false  则坦克的画出动作将不会执行
+            if(t.isTankBeGood()){
+                t.setLife(t.getLife() - 20);//当坦克是好坦克的时候  每次被击中就血量减少20
+                if(t.getLife() <= 0){
+                    t.setBeLive(false);//如果血量减少到0 坦克就消失
+                }
+            } else {
+                t.setBeLive(false);//如果坏坦克被子弹击中  则设置坦克生存状态为false  则坦克的画出动作将不会执行
+            }
+
             this.missileslive = false;//坦克被子弹击中  设置击中坦克的子弹的消失
             Explode e = new Explode(x,y,tc);
             tc.explodes.add(e);

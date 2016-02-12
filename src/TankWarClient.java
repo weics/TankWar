@@ -40,6 +40,13 @@ public class TankWarClient extends Frame {
         g.drawString("tanks    counts:"+tanks.size()   ,50,140);        //在屏幕上显示敌方坦克的数量
         g.drawString("tanks      life:"+myTank.getLife(),50,160);       //在屏幕上显示敌方坦克的数量
 
+        //判断敌方坦克是否死了   如果死了  就重新生成坦克
+        if(tanks.size() <= 0){
+            for(int i = 0 ; i < 10 ; i++) {
+                tanks.add(new Tank(50 + 40 *(i+1),50 , false, Tank.Dircetion.D,this));
+            }
+        }
+
         for(int i= 0 ; i < missiles.size();i++){
             Missile m = missiles.get(i);    //得到每个子弹的对象
             m.hitTanks(tanks);              //敌方坦克击中会消失

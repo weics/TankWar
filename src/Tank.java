@@ -264,6 +264,12 @@ public class Tank {
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();//获取键盘的按键的值
         switch(key) {
+            case KeyEvent.VK_F2://当按下F2的时候 就重启
+                if(!this.beLive){
+                    this.setBeLive(true);
+                    this.setLife(100);
+                }
+                break;
             case KeyEvent.VK_CONTROL:   //当按下的control键松开的时候才开炮
                 fire();
                 break;

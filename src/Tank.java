@@ -18,6 +18,7 @@ public class Tank {
     private int oldX;//记录坦克撞到墙是的原始位置X轴
     private int oldY;//记录坦克撞到墙是的原始位置Y轴
     private int life = 100;//设置坦克的初始血量为100
+    private BloodBar bb = new BloodBar();//新建一个血量的对象
 
     TankWarClient tc;
 
@@ -97,6 +98,11 @@ public class Tank {
 
 
         g.fillOval(x,y,WIDTH,HEIGHT);
+
+        if(isTankBeGood()){
+            bb.draw(g);
+        }
+
         g.setColor(c);
         switch(ptdir) {         //选择炮筒的方向  使得炮筒的方向与坦克的方向一致
             case L:
@@ -342,6 +348,19 @@ public class Tank {
         Dircetion[] dirs = Dircetion.values();
         for(int i = 0 ; i < 8 ; i++){
             fire(dirs[i]);
+        }
+    }
+
+
+    //创建一个血量的内部类
+    private class BloodBar {
+        public void draw (Graphics g){
+            Color c = g.getColor();
+            g.setColor(Color.BLACK);//设置血量的颜色
+            g.drawRect(x,y-10,WIDTH,10);
+            int w = WIDTH * life /100; //显示血量的变化
+            g.fillRect(x,y-10,w,10);
+            g.setColor(c);
         }
     }
 

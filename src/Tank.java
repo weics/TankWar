@@ -1,7 +1,11 @@
+import com.sun.javafx.collections.MappingChange;
+import com.sun.xml.internal.ws.wsdl.parser.MemberSubmissionAddressingWSDLParserExtension;
+
 import javax.xml.xpath.XPath;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.*;
+import java.awt.Image;
 
 /**
  * Created by WEI on 2016/2/6.
@@ -38,6 +42,32 @@ public class Tank {
 
     private int step = r.nextInt(12)+3;//使用随机函数产生随机数随机数为0~11  不包括12  并且加上3
 
+    private static Toolkit tk = Toolkit.getDefaultToolkit();
+    private static Map<String , Image> imgs = new HashMap<String, Image>();
+    private static Image[] tankImgs = null;
+
+    static {
+        tankImgs = new Image[] {
+            tk.getImage(Explode.class.getClassLoader().getResource("images/tankL.gif")),
+            tk.getImage(Explode.class.getClassLoader().getResource("images/tankLU.gif")),
+            tk.getImage(Explode.class.getClassLoader().getResource("images/tankU.gif")),
+            tk.getImage(Explode.class.getClassLoader().getResource("images/tankRU.gif")),
+            tk.getImage(Explode.class.getClassLoader().getResource("images/tankR.gif")),
+            tk.getImage(Explode.class.getClassLoader().getResource("images/tankRD.gif")),
+            tk.getImage(Explode.class.getClassLoader().getResource("images/tankD.gif")),
+            tk.getImage(Explode.class.getClassLoader().getResource("images/tankLD.gif"))
+        };
+
+        imgs.put("L",tankImgs[0]);
+        imgs.put("LU",tankImgs[1]);
+        imgs.put("U",tankImgs[2]);
+        imgs.put("RU",tankImgs[3]);
+        imgs.put("R",tankImgs[4]);
+        imgs.put("RD",tankImgs[5]);
+        imgs.put("D",tankImgs[6]);
+        imgs.put("LD",tankImgs[7]);
+
+    }
     //坦克的生存状态的get方法
     public boolean isBeLive() {
         return beLive;
@@ -56,9 +86,6 @@ public class Tank {
         this.life = life ;
     }
 
-
-
-    //enum Dircetion  {L,LU,U,RU,R,RD,D,LD,STOP}
 
     private Direction dir = Direction.STOP; //初始化坦克的方向为停止
     private Direction ptdir = Direction.D;  //设置炮筒的方向
@@ -89,45 +116,36 @@ public class Tank {
             return ;
         }
 
-        Color c = g.getColor();
-        if(tankbeGood){
-            g.setColor(Color.RED);      //设置友方坦克的颜色为红色
-        } else {
-            g.setColor(Color.BLUE);     //设置敌方的坦克颜色为红色
-        }
-
-
-        g.fillOval(x,y,WIDTH,HEIGHT);
 
         if(isTankBeGood()){
             bb.draw(g);
         }
 
-        g.setColor(c);
+
         switch(ptdir) {         //选择炮筒的方向  使得炮筒的方向与坦克的方向一致
             case L:
-                g.drawLine(x + Tank.WIDTH/2, y + Tank.HEIGHT/2, x, y + Tank.HEIGHT/2);
+                g.drawImage(imgs.get("L"),x,y,null);
                 break;
             case LU:
-                g.drawLine(x + Tank.WIDTH/2, y + Tank.HEIGHT/2, x, y);
+                g.drawImage(imgs.get("LU"),x,y,null);
                 break;
             case U:
-                g.drawLine(x + Tank.WIDTH/2, y + Tank.HEIGHT/2, x + Tank.WIDTH/2, y);
+                g.drawImage(imgs.get("U"),x,y,null);
                 break;
             case RU:
-                g.drawLine(x + Tank.WIDTH/2, y + Tank.HEIGHT/2, x + Tank.WIDTH, y);
+                g.drawImage(imgs.get("RU"),x,y,null);
                 break;
             case R:
-                g.drawLine(x + Tank.WIDTH/2, y + Tank.HEIGHT/2, x + Tank.WIDTH, y + Tank.HEIGHT/2);
+                g.drawImage(imgs.get("R"),x,y,null);
                 break;
             case RD:
-                g.drawLine(x + Tank.WIDTH/2, y + Tank.HEIGHT/2, x + Tank.WIDTH, y + Tank.HEIGHT);
+                g.drawImage(imgs.get("RD"),x,y,null);
                 break;
             case D:
-                g.drawLine(x + Tank.WIDTH/2, y + Tank.HEIGHT/2, x + Tank.WIDTH/2, y + Tank.HEIGHT);
+                g.drawImage(imgs.get("D"),x,y,null);
                 break;
             case LD:
-                g.drawLine(x + Tank.WIDTH/2, y + Tank.HEIGHT/2, x , y + Tank.HEIGHT);
+                g.drawImage(imgs.get("LD"),x,y,null);
                 break;
         }
         move();     //坦克移动的函数

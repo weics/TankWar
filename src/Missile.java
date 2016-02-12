@@ -1,5 +1,8 @@
 import java.awt.*;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 /**
  * Created by WEI on 2016/2/7.
  */
@@ -16,6 +19,33 @@ public class Missile {
     Direction dir ;   //获取坦克的方向  以便是子弹的与坦克的方向一致
     private TankWarClient tc;
     private boolean good;//判断子弹的好坏
+
+    private static Toolkit tk = Toolkit.getDefaultToolkit();
+    private static Map<String , Image> imgs = new HashMap<String, Image>();
+    private static Image[] missileImgs = null;
+
+    static {
+        missileImgs = new Image[] {
+                tk.getImage(Explode.class.getClassLoader().getResource("images/missileL.gif")),
+                tk.getImage(Explode.class.getClassLoader().getResource("images/missileLU.gif")),
+                tk.getImage(Explode.class.getClassLoader().getResource("images/missileU.gif")),
+                tk.getImage(Explode.class.getClassLoader().getResource("images/missileRU.gif")),
+                tk.getImage(Explode.class.getClassLoader().getResource("images/missileR.gif")),
+                tk.getImage(Explode.class.getClassLoader().getResource("images/missileRD.gif")),
+                tk.getImage(Explode.class.getClassLoader().getResource("images/missileD.gif")),
+                tk.getImage(Explode.class.getClassLoader().getResource("images/missileLD.gif"))
+        };
+
+        imgs.put("L",missileImgs[0]);
+        imgs.put("LU",missileImgs[1]);
+        imgs.put("U",missileImgs[2]);
+        imgs.put("RU",missileImgs[3]);
+        imgs.put("R",missileImgs[4]);
+        imgs.put("RD",missileImgs[5]);
+        imgs.put("D",missileImgs[6]);
+        imgs.put("LD",missileImgs[7]);
+
+    }
 
 
     public Missile(int x, int y, Direction dir) {
@@ -44,14 +74,32 @@ public class Missile {
             return ;
         }
 
-        Color c = g.getColor();
-        if(good){
-            g.setColor(Color.RED);
-        } else {
-            g.setColor(Color.BLACK);
+        switch(dir) {
+            case L:
+                g.drawImage(imgs.get("L"),x,y,null);
+                break;
+            case LU:
+                g.drawImage(imgs.get("LU"),x,y,null);
+                break;
+            case U:
+                g.drawImage(imgs.get("U"),x,y,null);
+                break;
+            case RU:
+                g.drawImage(imgs.get("RU"),x,y,null);
+                break;
+            case R:
+                g.drawImage(imgs.get("R"),x,y,null);
+                break;
+            case RD:
+                g.drawImage(imgs.get("RD"),x,y,null);
+                break;
+            case D:
+                g.drawImage(imgs.get("D"),x,y,null);
+                break;
+            case LD:
+                g.drawImage(imgs.get("LD"),x,y,null);
+                break;
         }
-        g.fillOval(x,y,WIDTH,HEIGHT);
-        g.setColor(c);
         move();
     }
 

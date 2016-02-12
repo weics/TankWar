@@ -364,5 +364,15 @@ public class Tank {
         }
     }
 
+    //坦克吃掉血块的函数
+    public boolean eatBlood(Blood b){
+        if( this.beLive && b.isBloodLive() && this.getRect().intersects(b.getRect())){
+            this.setLife(100);
+            b.setBloodLive(false);
+            return true;
+        }
+        return false;
+    }
+
 
 }

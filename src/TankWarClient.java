@@ -25,6 +25,8 @@ public class TankWarClient extends Frame {
     Wall w1 = new Wall(300,200,100,30,this);    //创建墙1的对象
     Wall w2 = new Wall(200,300,30,100,this);    //创建墙2的对象
 
+    Blood b = new Blood();
+
     List<Explode> explodes = new ArrayList<Explode>();
     List<Missile> missiles = new ArrayList<Missile>();//创建多个子弹的对象的集合
     List<Tank> tanks = new ArrayList<Tank>();
@@ -57,12 +59,14 @@ public class TankWarClient extends Frame {
             t.collideWithWall(w1);//判断坦克是否与墙相撞
             t.collideWithWall(w2);//判断坦克是否与墙相撞
             t.collideWithTank(tanks);//判断坦克是否与坦克相撞
+            t.eatBlood(b);//判断坦克是否将血块吃掉
             t.draw(g);
         }
 
         myTank.draw(g); //画出坦克的原型
         w1.draw(g);//画出墙1
         w2.draw(g);//画出墙2
+        b.draw(g);  //画出血块
 
     }
 

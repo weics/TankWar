@@ -6,6 +6,10 @@ import java.util.Properties;
  */
 public class Propertiesmanager {
 
+    /**
+     * 此函数将构造函数私有化，使得其他函数不能对其进行创建
+     */
+    private Propertiesmanager(){}
 
     public static String getProperty(String key){
 
@@ -16,6 +20,8 @@ public class Propertiesmanager {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
 
         return props.getProperty(key);
     }

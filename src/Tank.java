@@ -1,5 +1,3 @@
-import com.sun.javafx.collections.MappingChange;
-import com.sun.xml.internal.ws.wsdl.parser.MemberSubmissionAddressingWSDLParserExtension;
 
 import javax.xml.xpath.XPath;
 import java.awt.*;
@@ -8,36 +6,73 @@ import java.util.*;
 import java.awt.Image;
 
 /**
+ * 这个类是介绍坦克的各个方法和性质的类
  * Created by WEI on 2016/2/6.
  */
 public class Tank {
 
+    /**
+     * 坦克沿X轴方向运动的速度
+     */
+    public static final int XSPEED = 5;
 
-    public static final int XSPEED = 5; //x轴方向的速度
-    public static final int YSPEED = 5; //x轴方向的速度
-    public static final int WIDTH = 20; //坦克的宽度
-    public static final int HEIGHT = 20;//坦克的高度
-    int x; //设置坦克的位置距离左上角的水平距离
-    int y; //设置坦克的位置距离左上角的垂直距离
-    private int oldX;//记录坦克撞到墙是的原始位置X轴
-    private int oldY;//记录坦克撞到墙是的原始位置Y轴
-    private int life = 100;//设置坦克的初始血量为100
-    private BloodBar bb = new BloodBar();//新建一个血量的对象
+    /**
+     * 坦克沿Y轴方向运动的速度
+     */
+    public static final int YSPEED = 5;
 
+    /**
+     * 坦克在终端显示的宽度
+     */
+    public static final int WIDTH = 20;
+
+    /**
+     * 坦克在终端显示的高度
+     */
+    public static final int HEIGHT = 20;
+
+    /**
+     * 坦克在终端显示位置距离游戏框的左上角的水平距离(X轴)
+     */
+    int x;
+
+    /**
+     * 坦克在终端显示位置距离游戏框的左上角的垂直距离(Y轴)
+     */
+    int y;
+
+    /**
+     * 当坦克撞到墙的时候，记录坦克当时的位置水平距离(X轴)
+     */
+    private int oldX;
+
+    /**
+     * 当坦克撞到墙的时候，记录坦克当时的位置水平距离(X轴)
+     */
+    private int oldY;
+
+    /**
+     * 初始化坦克的生命值为100
+     */
+    private int life = 100;
+
+    //新建一个血量的对象
+    private BloodBar bb = new BloodBar();
+
+    //导入一个坦克游戏的控制台指针
     TankWarClient tc;
 
     //定义四个布尔变量来判断方向的确定  初始化全部为false
-    private boolean bL=false;
-    private boolean bU=false;
-    private boolean bR=false;
-    private boolean bD=false;
+    private boolean bL=false;//方向 左
+    private boolean bU=false;//方向 上
+    private boolean bR=false;//方向 右
+    private boolean bD=false;//方向 下
 
-    public boolean isTankBeGood() {
-        return tankbeGood;
-    }
-
+    /**
+     *
+     */
     private boolean tankbeGood ;    //控制坦克是否为友方坦克还是敌方坦克
-    private boolean beLive = true;  //控制坦克生存状态  即坦克是否被子弹击中死亡
+    private boolean tankbeLive = true;  //控制坦克生存状态  即坦克是否被子弹击中死亡
     private static Random r = new Random();
 
     private int step = r.nextInt(12)+3;//使用随机函数产生随机数随机数为0~11  不包括12  并且加上3
@@ -45,6 +80,10 @@ public class Tank {
     private static Toolkit tk = Toolkit.getDefaultToolkit();
     private static Map<String , Image> imgs = new HashMap<String, Image>();
     private static Image[] tankImgs = null;
+    public boolean isTankBeGood() {
+        return tankbeGood;
+    }
+
 
     static {
         tankImgs = new Image[] {
@@ -69,13 +108,13 @@ public class Tank {
 
     }
     //坦克的生存状态的get方法
-    public boolean isBeLive() {
-        return beLive;
+    public boolean istankbeLive() {
+        return tankbeLive;
     }
 
     //坦克的生存状态的set方法
-    public void setBeLive(boolean beLive) {
-        this.beLive = beLive;
+    public void settankbeLive(boolean tankbeLive) {
+        this.tankbeLive = tankbeLive;
     }
 
     public int getLife() {
@@ -108,7 +147,7 @@ public class Tank {
 
     //使用画笔来创建坦克
     public void draw(Graphics g){
-        if(!beLive){
+        if(!tankbeLive){
             if(!tankbeGood){
                 tc.tanks.remove(this);  //如果坦克为敌方坦克则将坦克从坦克对象的集合中删除
 
@@ -283,8 +322,8 @@ public class Tank {
         int key = e.getKeyCode();//获取键盘的按键的值
         switch(key) {
             case KeyEvent.VK_F2://当按下F2的时候 就重启
-                if(!this.beLive){
-                    this.setBeLive(true);
+                if(!this.tankbeLive){
+                    this.settankbeLive(true);
                     this.setLife(100);
                 }
                 break;
@@ -312,7 +351,7 @@ public class Tank {
 
     //子弹的发射
     public Missile fire(){
-        if(!beLive){
+        if(!tankbeLive){
             return null;
         }
         int x= this.x + Tank.WIDTH/2 - Missile.WIDTH/2;//使子弹射出的位置是坦克的中心
@@ -324,7 +363,7 @@ public class Tank {
 
 
     public Missile fire(Direction dir ){
-        if(!beLive){
+        if(!tankbeLive){
             return null;
         }
         int x= this.x + Tank.WIDTH/2 - Missile.WIDTH/2;//使子弹射出的位置是坦克的中心
@@ -357,7 +396,7 @@ public class Tank {
         for(int i=0 ; i < tanks.size() ; i++){
             Tank t = tanks.get(i);
             if(this != t){
-                if(this.beLive && t.isBeLive() && this.getRect().intersects(t.getRect())){
+                if(this.tankbeLive && t.istankbeLive() && this.getRect().intersects(t.getRect())){
                     this.stay();
                     return true;
                 }
@@ -390,7 +429,7 @@ public class Tank {
 
     //坦克吃掉血块的函数
     public boolean eatBlood(Blood b){
-        if( this.beLive && b.isBloodLive() && this.getRect().intersects(b.getRect())){
+        if( this.tankbeLive && b.isBloodLive() && this.getRect().intersects(b.getRect())){
             this.setLife(100);
             b.setBloodLive(false);
             return true;

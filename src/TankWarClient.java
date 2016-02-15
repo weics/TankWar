@@ -40,7 +40,13 @@ import java.util.Properties;
 
 public class TankWarClient extends Frame {
 
+    /**
+     * 此变量是表示整个游戏的屏幕的宽度
+     */
     public static final int  GAME_WIDTH = 800;
+    /**
+     * 此变量是表示整个游戏的屏幕的高度
+     */
     public static final int  GAME_LENGTH = 600;
 
 
@@ -59,7 +65,10 @@ public class TankWarClient extends Frame {
     List<Tank> tanks = new ArrayList<Tank>();
 
 
-
+    /**
+     *
+     * @param g  此变量为画笔
+     */
     public void paint(Graphics g) {
 
         g.drawString("missiles counts:"+missiles.size(),50,100);        //在屏幕上显示子弹发射的数量
@@ -105,8 +114,12 @@ public class TankWarClient extends Frame {
 
     }
 
-    //使用双缓冲解决图像在显示的时候的不连贯的问题
-    //使用一个虚拟的图片接收操作，然后一次性的复写到顶层图片(即显示给用户看的图片)
+
+    /**
+     *使用双缓冲解决图像在显示的时候的不连贯的问题
+     *使用一个虚拟的图片接收操作，然后一次性的复写到顶层图片(即显示给用户看的图片)
+     * @param g  画笔变量
+     */
     public void update(Graphics g) {
 
         if (offScreenImage == null) {
@@ -123,7 +136,9 @@ public class TankWarClient extends Frame {
 
     }
 
-    //游戏窗口的函数
+    /**
+     * 游戏窗口框运行的函数
+     */
     public void lanchFrame(){
 
 
